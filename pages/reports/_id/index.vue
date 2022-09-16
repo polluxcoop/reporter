@@ -4,6 +4,8 @@
 
 <script>
 export default {
+  layout: "app",
+
   computed: {
     reportId() {
       return this.$route.params.id;

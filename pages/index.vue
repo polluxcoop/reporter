@@ -1,66 +1,60 @@
 <template>
-  <div class="flex flex-col gap-4 bg-indigo-700 rounded-[20px]">
-    <div v-if="!isConnected" class="mx-auto max-w-2xl text-center py-20 px-8">
-      <h1 class="font-bold tracking-tight text-white text-3xl">
-        Reportá lo que encuentres medio manco.
-      </h1>
-
-      <h2 class="font-bold tracking-tight text-white text-2xl">
-        Pero primero ingresá con MetaMask.
-      </h2>
-
-      <button
-        v-if="showConnectButton"
-        @click="handleConnection"
-        class="mt-8 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-white px-5 py-3 text-base font-medium text-indigo-600 hover:bg-indigo-50 sm:w-auto"
-      >
-        Conectar
-      </button>
-    </div>
-
-    <template v-else>
-      <report-search @search="handleSearch" />
+  <div class="w-1/2">
+    <div class="flex items-center justify-between">
+      <div class="my-8">
+        <h1 class="text-2xl text-bold">Tus reportes</h1>
+        <p class="text-gray-300">{{ account }}</p>
+      </div>
 
       <nuxt-link
-        class="w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-        to="/new"
+        class="rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        :to="{ name: 'reports-new' }"
       >
         Nuevo
       </nuxt-link>
-    </template>
+    </div>
+
+    <div class="border border-gray-300 rounded-md my-8">
+      <ul role="list" class="divide-y divide-gray-200">
+        <li v-for="report in reports" :key="report.id">
+          <report-list-item :report="report" />
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
-import ReportSearch from "~/components/Report/Search";
+import { mapState } from "vuex";
+
+import ReportListItem from "~/components/Report/ListItem";
 
 export default {
-  name: "IndexPage",
-
   components: {
-    ReportSearch,
+    ReportListItem,
   },
+
+  layout: "app",
 
   data() {
     return {
-      showConnectButton: true,
-      isConnected: false,
+      reports: [
+        { id: "1", title: "Title Issue 1", content: "asd 1" },
+        { id: "2", title: "Title Issue 2", content: "asd 2" },
+        { id: "3", title: "Title Issue 3", content: "asd 3" },
+        { id: "4", title: "Title Issue 4", content: "asd 4" },
+        { id: "5", title: "Title Issue 5", content: "asd 5" },
+        { id: "6", title: "Title Issue 6", content: "asd 6" },
+        { id: "7", title: "Title Issue 7", content: "asd 7" },
+        { id: "8", title: "Title Issue 8", content: "asd 8" },
+        { id: "9", title: "Title Issue 9", content: "asd 9" },
+        { id: "10", title: "Title Issue 10", content: "asd 10" },
+      ],
     };
   },
 
-  methods: {
-    handleConnection() {
-      this.$router.push({
-        path: "reports",
-        query: { publicKey: "logged-metamask-key" },
-      });
-    },
-
-    handleSearch(publicKey) {
-      console.log("handleSearch > not implemented", publicKey);
-
-      this.$router.push({ path: "reports", query: { publicKey } });
-    },
+  computed: {
+    ...mapState("auth", ["account"]),
   },
 };
 </script>

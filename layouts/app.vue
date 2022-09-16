@@ -13,8 +13,8 @@ export default {
   },
 
   mounted() {
-    if (this.account) {
-      this.$router.replace("/");
+    if (!this.account) {
+      this.$router.replace("access");
     }
   },
 };
