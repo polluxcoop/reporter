@@ -6,32 +6,42 @@ const { Router } = require("express");
 const db = new sqlite3.Database(":memory:");
 
 db.serialize(function () {
-  db.run("CREATE TABLE reports (description TEXT)");
-  var stmt = db.prepare("INSERT INTO reports VALUES (?)");
+  db.run(
+    "CREATE TABLE reports (signature NVARCHAR(132) PRIMARY KEY NOT NULL, description TEXT NOT NULL, title NVARCHAR(50) NOT NULL)"
+  );
 
-  for (var i = 0; i < 10; i++) {
-    stmt.run("Ipsum " + i);
-  }
+  db.run(
+    "CREATE TABLE nonces (signature NVARCHAR(132) PRIMARY KEY NOT NULL, nonce INTEGER NOT NULL)"
+  );
+
+  const stmt = db.prepare(
+    "INSERT INTO reports (signature, description, title) VALUES (?,?,?)"
+  );
+
+  stmt.run(["lorem", "hola", "mundo"]);
 
   stmt.finalize();
 
-  db.each("SELECT rowid AS id, description FROM reports", function (err, row) {
-    console.log(row.id + ": " + row.description);
+  db.each("SELECT * FROM reports", function (err, row) {
+    console.log(row.signature + ": " + row.description);
   });
+
   const router = Router();
 
   router.use(express.json());
 
-  router.get("/db", function (req, res, next) {
-    res.json({ foo: 1 });
+  router.get("/reports/:signature", function (req, res, next) {
+    const sql = `SELECT * FROM reports where signature = '${req.params.signature}'`;
+
+    db.get(sql, function (err, row) {
+      res.json(row);
+    });
   });
 
-  router.get("/db/:id", function (req, res, next) {
-    let id = req.params.id;
-    let sql = `SELECT rowid AS id, description FROM reports where rowid = ${id}`;
-    console.log(sql);
+  router.get("/nonces/:signature", function (req, res, next) {
+    const sql = `SELECT * FROM nonces where signature = '${req.params.signature}'`;
+
     db.get(sql, function (err, row) {
-      console.log(row.id + ": " + row.info);
       res.json(row);
     });
   });
