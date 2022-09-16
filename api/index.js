@@ -1,12 +1,16 @@
-const express = require("express");
-
+import express from "express";
 const app = express();
 
-app.get("/hello-world", (req, res, next) => {
-  res.send("hola mundo");
-});
+const sqlite = require("./routes/db");
+
+app.use(sqlite);
+
+module.exports = {
+  path: "/api",
+  handler: app,
+};
 
 export default {
-  path: "/api/v1/",
+  path: "/api",
   handler: app,
 };
