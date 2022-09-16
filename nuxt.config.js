@@ -1,6 +1,16 @@
+import path from "path";
+
+/* eslint-disable */
+const dbPath = path.resolve(__dirname, "./api/db/base.db");
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: true,
+
+  db: {
+    dialect: "sqlite",
+    storage: dbPath,
+  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -37,5 +47,5 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
-  serverMiddleware: ["~/api/index"],
+  serverMiddleware: ["~/api"],
 };
