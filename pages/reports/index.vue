@@ -6,13 +6,12 @@
         <p class="text-gray-300">{{ publicKey }}</p>
       </div>
 
-      <button
-        type="button"
-        class="flex justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-        @click="$router.go(-1)"
+      <nuxt-link
+        class="rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        to="/new"
       >
-        Volver
-      </button>
+        Nuevo
+      </nuxt-link>
     </div>
 
     <div class="border border-gray-300 rounded-md my-8">
