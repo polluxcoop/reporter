@@ -4,6 +4,10 @@ import path from "path";
 const dbPath = path.resolve(__dirname, "./api/db/base.db");
 
 export default {
+  axios: {
+    baseURL: "/",
+  },
+
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: true,
 
@@ -42,7 +46,7 @@ export default {
   buildModules: [],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ["@nuxtjs/axios"],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
