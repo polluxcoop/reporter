@@ -39,19 +39,22 @@ export default {
   },
 
   methods: {
-    ...mapActions("auth", ["setAccount"]),
+    ...mapActions("auth", ["setAccountData"]),
 
     async handleConnection() {
       try {
-        const provider = new ethers.providers.Web3Provider(
-          window.ethereum,
-          "any"
-        );
-        await provider.send("eth_requestAccounts", []);
-        const signer = provider.getSigner();
+        // const provider = new ethers.providers.Web3Provider(
+        //   window.ethereum,
+        //   "any"
+        // );
+        // await provider.send("eth_requestAccounts", []);
+        // const signer = provider.getSigner();
+
+        const signer = await this.$wallet.getSigner();
+
         const signature = await signer.signMessage("sign-msg-test");
 
-        this.setAccount(signature);
+        this.setAccountData({ signature, signer });
 
         this.$router.push("/");
       } catch (error) {

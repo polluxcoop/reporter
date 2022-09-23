@@ -71,10 +71,14 @@ db.serialize(function () {
 
     db.get(sql, function (err, row) {
       if (err) {
+        return res.json(err);
+      }
+
+      if (!row) {
         return res.json({ nonce: 0 });
       }
 
-      res.json({ nonce: row.nonce });
+      res.json({ nonce: row?.nonce });
     });
   });
 

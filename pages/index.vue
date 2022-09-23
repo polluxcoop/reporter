@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between">
       <div class="my-8">
         <h1 class="text-2xl text-bold">Tus reportes</h1>
-        <p class="text-gray-300">{{ account }}</p>
+        <p class="text-gray-300">{{ signature }}</p>
       </div>
 
       <nuxt-link
@@ -16,7 +16,7 @@
 
     <div class="border border-gray-300 rounded-md my-8">
       <ul role="list" class="divide-y divide-gray-200">
-        <li v-for="report in reports" :key="report.id">
+        <li v-for="report in nonce" :key="report">
           <report-list-item :report="report" />
         </li>
       </ul>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 import ReportListItem from "~/components/Report/ListItem";
 
@@ -38,23 +38,43 @@ export default {
 
   data() {
     return {
+      nonce: "",
       reports: [
-        { id: "1", title: "Title Issue 1", content: "asd 1" },
-        { id: "2", title: "Title Issue 2", content: "asd 2" },
-        { id: "3", title: "Title Issue 3", content: "asd 3" },
-        { id: "4", title: "Title Issue 4", content: "asd 4" },
-        { id: "5", title: "Title Issue 5", content: "asd 5" },
-        { id: "6", title: "Title Issue 6", content: "asd 6" },
-        { id: "7", title: "Title Issue 7", content: "asd 7" },
-        { id: "8", title: "Title Issue 8", content: "asd 8" },
-        { id: "9", title: "Title Issue 9", content: "asd 9" },
-        { id: "10", title: "Title Issue 10", content: "asd 10" },
+        // { id: "1", title: "Title Issue 1", content: "asd 1" },
+        // { id: "2", title: "Title Issue 2", content: "asd 2" },
+        // { id: "3", title: "Title Issue 3", content: "asd 3" },
+        // { id: "4", title: "Title Issue 4", content: "asd 4" },
+        // { id: "5", title: "Title Issue 5", content: "asd 5" },
+        // { id: "6", title: "Title Issue 6", content: "asd 6" },
+        // { id: "7", title: "Title Issue 7", content: "asd 7" },
+        // { id: "8", title: "Title Issue 8", content: "asd 8" },
+        // { id: "9", title: "Title Issue 9", content: "asd 9" },
+        // { id: "10", title: "Title Issue 10", content: "asd 10" },
       ],
     };
   },
 
   computed: {
-    ...mapState("auth", ["account"]),
+    ...mapState("auth", ["signature"]),
+  },
+
+  mounted() {
+    this.fetchNonce();
+  },
+
+  methods: {
+    // ...mapActions(),
+
+    async fetchNonce() {
+      console.log("fetchNonce");
+      // GET api/nonces/signature
+
+      const {
+        data: { nonce },
+      } = await this.$axios.get(`api/nonces/${this.signature}`);
+
+      this.nonce = nonce;
+    },
   },
 };
 </script>

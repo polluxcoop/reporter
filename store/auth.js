@@ -1,17 +1,23 @@
 export const state = () => ({
-  account: "",
+  signature: "",
+  signer: null,
 });
 
 export const mutations = {
-  SET_ACCOUNT(state, account) {
-    state.account = account;
+  SET_SIGNATURE(state, signature) {
+    state.signature = signature;
 
-    localStorage.setItem("REPORTER_AUTH_SIGNATURE", account);
+    localStorage.setItem("REPORTER_AUTH_SIGNATURE", signature);
+  },
+
+  SET_SIGNER(state, signer) {
+    state.signer = signer;
   },
 };
 
 export const actions = {
-  async setAccount({ commit }, account) {
-    commit("SET_ACCOUNT", account);
+  async setAccountData({ commit }, { signature, signer }) {
+    commit("SET_SIGNATURE", signature);
+    commit("SET_SIGNER", signer);
   },
 };

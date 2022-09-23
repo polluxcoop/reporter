@@ -9,11 +9,11 @@ import { mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState("auth", ["account"]),
+    ...mapState("auth", ["signature"]),
   },
 
   mounted() {
-    if (this.account) {
+    if (this.signature) {
       this.$router.replace("/");
     }
   },

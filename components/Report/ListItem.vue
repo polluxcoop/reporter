@@ -1,11 +1,11 @@
 <template>
-  <nuxt-link :to="{ name: 'reports-id', params: { id: report.id } }">
+  <nuxt-link :to="{ name: 'reports-id', params: { id: report } }">
     <div class="flex items-center px-4 py-4 sm:px-6 hover:bg-gray-50">
       <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
         <div class="truncate">
           <div class="flex text-sm">
             <p class="truncate font-medium text-indigo-600">
-              {{ report.title }}
+              Issue #{{ report }}
             </p>
             <p class="ml-1 flex-shrink-0 font-normal text-gray-500">
               in backlog
