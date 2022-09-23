@@ -43,7 +43,7 @@ export default {
   props: {
     report: {
       required: true,
-      type: Object,
+      type: Number,
     },
   },
 };

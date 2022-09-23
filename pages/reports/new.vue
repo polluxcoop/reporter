@@ -17,7 +17,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import ReportForm from "~/components/Report/Form";
+
 export default {
   components: {
     ReportForm,
@@ -25,9 +27,20 @@ export default {
 
   layout: "app",
 
+  computed: {
+    ...mapState("auth", ["signature"]),
+  },
+
   methods: {
-    handleSubmit(payload) {
-      console.info("handleSubmit > to be implemented", payload);
+    async handleSubmit(payload) {
+      const nonce = Number(this.$route.query.nonce) + 1;
+      const reportSignature = await this.$wallet.signMessage(`${nonce}`);
+
+      this.$axios.post("api/reports", {
+        ...payload,
+        reportSignature,
+        nonceSignature: this.signature,
+      });
     },
   },
 };

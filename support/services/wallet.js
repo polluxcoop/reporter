@@ -8,6 +8,13 @@ export const getSigner = async () => {
   return provider.getSigner();
 };
 
+export const signMessage = async (message) => {
+  const signer = await getSigner();
+
+  return await signer.signMessage(message);
+};
+
 export default {
   getSigner,
+  signMessage,
 };

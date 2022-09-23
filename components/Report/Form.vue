@@ -1,8 +1,14 @@
 <template>
   <form class="flex flex-col gap-4">
+    <input
+      type="text"
+      class="flex-grow-1 block w-full rounded-none rounded-l-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+      placeholder="Titulo"
+      v-model="formData.title"
+    />
     <textarea
       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-      v-model="formData.details"
+      v-model="formData.description"
       rows="3"
       placeholder="Detalles del reporte"
     ></textarea>
@@ -21,7 +27,8 @@ export default {
   data() {
     return {
       formData: {
-        details: "",
+        description: "",
+        title: "",
       },
     };
   },
